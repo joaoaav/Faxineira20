@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        
+		<link href="css/styles.css" rel="stylesheet">		
+        <title>Faxineira 2.0</title>
+    </head>
+    <body>
+    
+    	<script id="cabecalho-tpl" type="text/x-handlebars-template">
+    		<div class='header'><span class="logo"></span><h1>P&aacute;gina Inicial</h1></div>
+		</script>
+    
+    	<script id="home-tpl" type="text/x-handlebars-template">
+    		<div class='search-bar'>
+				<a href="#inicio" class="button">Clique aqui para pesquisar</a>
+			</div>
+			<div class="scroll">
+				<div class="app">
+					<h1>Faxineira 2.0</h1>
+            		<div id="deviceready" class="blink">
+                		<p class="event listening">Dispositivo pronto</p>
+            		</div>
+				</div>
+			</div>
+		</script>
+		
+		<script id="inicio-tpl" type="text/x-handlebars-template">
+    		<div class='search-bar'>
+				<a href="#homePage" class="button">Voltar</a>
+			</div>
+			<div class="scroll">
+				<div class="inicio-busca">
+					Digite seu CEP<br>
+					<input type="text" name="cep-busca" id="cep-busca"/><br>
+					<a href="#" class="button buscar-cep">Ache sua Faxineira</a>
+				</div>
+				<div class="inicio-separador"> OU </div>
+				<div class="inicio-busca">
+					Escolha Estado<br>
+					<select name="estado-busca" id="estado-busca">
+						<option value="1">S&atilde;o Paulo</option>
+					</select>
+					<br><br>
+					Escolha Cidade<br>
+					<select name="cidade-busca" id="cidade-busca">
+						<option value="1">Guarulhos</option>
+					</select><br>
+					<a href="#" class="button buscar-estado">Ache sua Faxineira</a>
+				</div>
+				<div class="inicio-separador"> OU </div>
+				<div class="inicio-busca">
+					Fa&ccedil;a seu login<br>
+					<a href="#login" class="button">Login</a>
+				</div>
+			</div>
+		</script>
+		
+		<script id="filtro-tpl" type="text/x-handlebars-template">
+    		<div class='search-bar'>
+				<a href="#inicio" class="button">Voltar</a>
+			</div>
+			<div class="scroll">
+				<div class="inicio-busca">
+					Digite seu CEP<br>
+					<input type="text" name="cdsadsaep-busca" id="csadsadsaep-busca"/><br>
+					<a href="#" class="button buscar-cep">Ache sua Faxineira</a>
+				</div>
+				<div class="inicio-separador"> OU </div>
+				<div class="inicio-busca">
+					Escolha Estado<br>
+					<select name="estado-busca" id="estado-busca">
+						<option value="1">S&atilde;o Paulo</option>
+					</select>
+					<br><br>
+					Escolha Cidade<br>
+					<select name="cidade-busca" id="cidade-busca">
+						<option value="1">Guarulhos</option>
+					</select><br>
+					<a href="#" class="button buscar-estado">Ache sua Faxineira</a>
+				</div>
+				<div class="inicio-separador"> OU </div>
+				<div class="inicio-busca">
+					Fa&ccedil;a seu login<br>
+					<a href="#login" class="button">Login</a>
+				</div>
+			</div>
+		</script>
+		
+        <script type="text/javascript" src="cordova.js"></script>
+		<script src="phonegap.js"></script>
+
+		<script src="lib/jquery-1.8.2.min.js"></script>
+		<script src="lib/handlebars.js"></script>
+		<script src="js/storage/memory-store.js"></script>
+		<script src="js/storage/websql-store.js"></script>
+		<script src="js/HomeView.js"></script>
+		<script src="js/InicioView.js"></script>
+		<script src="js/FiltroView.js"></script>
+		<!-- <script src="js/EmployeeView.js"></script> -->
+		<script src="js/main.js"></script>
+		
+        <!-- <script type="text/javascript" src="js/index.js"></script> 
+        <script type="text/javascript">
+            app.initialize();
+        </script>-->
+    </body>
+</html>
