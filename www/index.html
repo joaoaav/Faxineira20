@@ -29,6 +29,10 @@
         
 		<link href="css/styles.css" rel="stylesheet">		
         <title>Faxineira 2.0</title>
+        
+        
+        
+        
     </head>
     <body>
     
@@ -58,20 +62,30 @@
 				<div class="inicio-busca">
 					Digite seu CEP<br>
 					<input type="text" name="cep-busca" id="cep-busca"/><br>
-					<a href="#" class="button buscar-cep">Ache sua Faxineira</a>
+					<a href="#" class="button buscar-cep">Procurar</a>
+					<div id="mapaCep" style="width: 100%;height: 400px; display:none; "></div><br>
+					<div id="localizacaoCep"></div>
+					
+					<input type="hidden" name="hidEnderecoCep" id="hidEnderecoCep"/>
+					<input type="hidden" name="hidBairroCep" id="hidBairroCep"/>
+					<input type="hidden" name="hidCidadeCep" id="hidCidadeCep"/>
+					<input type="hidden" name="hidEstadoCep" id="hidEstadoCep"/>
+					<input type="hidden" name="hidCepCep" id="hidCepCep"/>
+					<a href="#" class="button buscar-empregada-cep">Ache sua Faxineira</a>
 				</div>
 				<div class="inicio-separador"> OU </div>
 				<div class="inicio-busca">
-					Escolha Estado<br>
-					<select name="estado-busca" id="estado-busca">
-						<option value="1">S&atilde;o Paulo</option>
-					</select>
-					<br><br>
-					Escolha Cidade<br>
-					<select name="cidade-busca" id="cidade-busca">
-						<option value="1">Guarulhos</option>
-					</select><br>
-					<a href="#" class="button buscar-estado">Ache sua Faxineira</a>
+					Clique aqui para procurar sua localiza&ccedil;&atilde;o<br>
+					<a href="#" class="button buscar-localizacao">Procurar</a><br>
+					<div id="mapa" style="width: 100%;height: 400px; display:none; "></div><br>
+					<div id="localizacao"></div>
+					
+					<input type="hidden" name="hidEnderecoPosicao" id="hidEnderecoPosicao"/>
+					<input type="hidden" name="hidBairroPosicao" id="hidBairroPosicao"/>
+					<input type="hidden" name="hidCidadePosicao" id="hidCidadePosicao"/>
+					<input type="hidden" name="hidEstadoPosicao" id="hidEstadoPosicao"/>
+					<input type="hidden" name="hidCepPosicao" id="hidCepPosicao"/>
+					<a href="#" class="button buscar-empregada-posicao">Ache sua Faxineira</a>
 				</div>
 				<div class="inicio-separador"> OU </div>
 				<div class="inicio-busca">
@@ -81,39 +95,22 @@
 			</div>
 		</script>
 		
-		<script id="filtro-tpl" type="text/x-handlebars-template">
+		<script id="pessoas-tpl" type="text/x-handlebars-template">
     		<div class='search-bar'>
 				<a href="#inicio" class="button">Voltar</a>
 			</div>
 			<div class="scroll">
-				<div class="inicio-busca">
-					Digite seu CEP<br>
-					<input type="text" name="cdsadsaep-busca" id="csadsadsaep-busca"/><br>
-					<a href="#" class="button buscar-cep">Ache sua Faxineira</a>
-				</div>
-				<div class="inicio-separador"> OU </div>
-				<div class="inicio-busca">
-					Escolha Estado<br>
-					<select name="estado-busca" id="estado-busca">
-						<option value="1">S&atilde;o Paulo</option>
-					</select>
-					<br><br>
-					Escolha Cidade<br>
-					<select name="cidade-busca" id="cidade-busca">
-						<option value="1">Guarulhos</option>
-					</select><br>
-					<a href="#" class="button buscar-estado">Ache sua Faxineira</a>
-				</div>
-				<div class="inicio-separador"> OU </div>
-				<div class="inicio-busca">
-					Fa&ccedil;a seu login<br>
-					<a href="#login" class="button">Login</a>
-				</div>
+				{{#.}}
+    			<li><a href="#pessoaDetalhe/{{this.id}}">{{this.firstName}} {{this.lastName}}<br/>{{this.title}}</a></li>
+    			{{/.}}
 			</div>
 		</script>
 		
         <script type="text/javascript" src="cordova.js"></script>
 		<script src="phonegap.js"></script>
+		
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHVrcsPm5RQraoZ2hGT3MbhZDpD8jKgeU">
+	    </script>
 
 		<script src="lib/jquery-1.8.2.min.js"></script>
 		<script src="lib/handlebars.js"></script>
@@ -121,7 +118,7 @@
 		<script src="js/storage/websql-store.js"></script>
 		<script src="js/HomeView.js"></script>
 		<script src="js/InicioView.js"></script>
-		<script src="js/FiltroView.js"></script>
+		<script src="js/PessoasView.js"></script>
 		<!-- <script src="js/EmployeeView.js"></script> -->
 		<script src="js/main.js"></script>
 		

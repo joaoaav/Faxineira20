@@ -50,11 +50,12 @@ var app = {
 	        self.slidePage(new InicioView().render());
 	    }
 	    
-	    //carrega página de filtro inicial
-	    var filtro = hash.match(app.filtroURL);
-	    if (filtro) {
-	    	self.slidePage(new FiltroView().render());
+	    //carrega página de faxineiras inicial
+	    var pessoas = hash.match(app.pessoasURL);
+	    if (pessoas) {
+	    	self.slidePage(new PessoasView().render());
 	    }
+	    
 	    var match = hash.match(app.detailsURL);
 	    if (match) {
 	    	alert(2);
@@ -70,7 +71,7 @@ var app = {
 		this.detailsURL = /^#employees\/(\d{1,})/;
 		this.homeURL = /^#homePage/;
 		this.inicioURL = /^#inicio/;
-		this.filtroURL = /^#filtro/;
+		this.pessoasURL = /^#pessoas/;
 		
 		this.registerEvents();
 		//this.store = new MemoryStore(function() {
