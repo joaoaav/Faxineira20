@@ -334,3 +334,296 @@ li>a.tappable-active {
     width:50%;
     margin-left: auto; margin-right: auto;
 }
+
+.listaPessoas{
+	background: #f9f9f9 none repeat scroll 0 0;
+    display: table;
+    padding: 15px 5px;
+    width: 100%;
+}
+
+.pessoas{
+	background: #fff none repeat scroll 0 0 padding-box;
+    border-radius: 10px;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+    float: left;
+    margin-right: 14px;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100px;
+    display: table;
+}
+
+.pessoas .imagem{
+	width: 100%;
+	text-align:center;
+}
+
+.pessoas .imagem a{
+	display: block;
+    margin: 0 auto;
+    width: 80px;
+    z-index: -1;
+}
+
+.pessoas .imagem a img{
+	background-clip: padding-box;
+    border-radius: 50%;
+    width: 60px;
+}
+
+.pessoas .avaliacao{
+	float:left;
+	width: 100%;
+	text-align:center;
+}
+
+.pessoas .avaliacao img{
+	width:100%;
+}
+
+.pessoas .nome{
+	float:left;
+	width: 100%;
+	text-align:center;
+}
+
+div .acao{
+	background: #fff none repeat scroll 0 0 padding-box;
+    border-radius: 10px;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+    float: left;
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    display: table;
+    text-align: center;
+}
+
+/******** pagína detalhe da pessoa *********/
+.pessoa-modal-sidebar{
+	background: #e8ebef none repeat scroll 0 0;
+    color: #fff;
+    width: 100%;
+}
+.pessoa-modal-sidebar, .pessoa-modal-reviews {
+    box-sizing: border-box;
+    float: left;
+    padding: 20px;
+}
+.pessoa-modal-sidebar__avatar {
+    background-clip: padding-box;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto;
+}
+.pessoa-modal-sidebar__name {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.4;
+    margin: 10px 0 0;
+    text-align: center;
+    width: 100%;
+    color: #423a76;
+}
+.pessoa-modal-sidebar__stars {
+    font-size: 40%;
+    margin: 6px auto;
+    width: 130px;
+    text-align: center;
+}
+.pessoa-modal-sidebar__rating-number {
+    background: #5c42ab none repeat scroll 0 0 padding-box;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    margin: 5px auto;
+    padding: 6px;
+    text-align: center;
+    width: 70px;
+}
+.pessoa-modal-breakdown {
+    margin: 20px auto;
+    padding: 0;
+    width: 200px;
+    background-color: transparent;
+    border-bottom: 0px;
+    list-style: none;
+}
+.pessoa-modal-breakdown__item--true {
+    background-image: url("../img/check-yes.png");
+}
+.pessoa-modal-breakdown__item {
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: 24px auto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    margin: 5px 0;
+    padding-left: 35px;
+    color: #5d5d5d;
+    border: 0px;
+    
+}
+.pessoa-modal-actions{
+	text-align: center;	
+}
+.pessoa-modal-reviews {
+    box-shadow: 0 -10px 5px 0 rgba(255, 255, 255, 0.1) inset;
+    height: auto;
+    width: 100%;
+}
+.pessoa-modal-reviews__heading {
+    border-bottom: 1px solid #d4d4d8;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    color: #423a76;
+}
+.pessoa-modal-reviews-list {
+    margin: 0;
+    padding: 0;
+    border-bottom: 0px;
+}
+.pessoa-modal-reviews-list__item {
+    border-bottom: 1px solid #d4d4d8;
+    border-top: 0px;
+    padding: 20px;
+    transition: all 0.2s ease 0s;
+    display: block;
+    width: 98%;
+}
+.pessoa-modal-reviews-list__header {
+    width:95%;
+    clear: both;
+    display: table;
+}
+.pessoa-modal-review__heading {
+    color: #2a283d;
+    float: left;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1;
+    margin: 0 0 8px;
+    padding: 0;
+}
+.pessoa-modal-review__stars {
+    float: right;
+    font-size: 25%;
+    width: 90px;
+}
+
+.pessoa-modal-review__stars img {
+    width: 100%;
+}
+.pessoa-modal-review__comments {
+    line-height: 1.5;
+    margin-bottom: 6px;
+    transition: all 0.2s ease 0s;
+    width: 95%;
+    color: #5d5d5d;
+}
+/******** pagína detalhe da pessoa *********/
+
+/******** pagina detalhes da limpeza ********/
+.row{
+    background-color: #f9f9fa;
+    padding: 0 15px;
+}	
+.row .title{
+	float: left;
+    margin-right: 15px;
+    padding: 15px 0;	
+}
+.row .description{
+    padding: 15px;
+    position: relative;
+    display: table;
+}
+.row .vertical label{
+    display: block;
+    padding-left: 15px;
+    text-indent: -15px;
+}
+.row .vertical input{
+    width: 13px;
+    height: 13px;
+    padding: 0;
+    margin:0;
+    vertical-align: bottom;
+    position: relative;
+    top: -1px;
+    *overflow: hidden;
+}
+.page_aside .booking_summary {
+    background: #fff none repeat scroll 0 0 padding-box;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    font-family: "Gotham Rounded SSm A","Gotham Rounded SSm B","Gotham Rounded";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    margin-top: 15px;
+    width: 99%;
+    display:table;
+}
+.page_aside .flat-box .header.aqua {
+    background: #fff none repeat scroll 0 0;
+    border-bottom: 1px solid #dddddd;
+    color: #5c42ab;
+    font-family: "Gotham Rounded SSm A","Gotham Rounded SSm B","Gotham Rounded";
+    font-style: normal;
+    font-weight: 500;
+    padding-left:15px;
+    width: 99%;
+    display:table;
+}
+.page_aside .main-section ul {
+    list-style-type: none;
+    margin: 10px 5px;
+    padding: 0;
+    border: 0px;
+}
+.page_aside .main-section ul li {
+    padding: 5px;
+    border-top: medium none;
+    color: #5d5d5d;
+    display: table;
+}
+.page_aside .main-section ul li .booking_detail_name {
+    float: left;
+}
+.page_aside .main-section ul li .booking_detail_value {
+    float: right;
+    color: #696969;
+    font-weight: bold;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.page_aside .main-section ul .booking-cost {
+    background: #f9f9f9 none repeat scroll 0 0;
+    border: 1px dashed #ccc;
+    border-radius: 3px;
+    margin: 15px 5px;
+    padding: 2px 0px;
+    display: table;
+    width: 99%;
+}
+.page_aside .main-section ul .booking-cost .booking_details_item {
+    font-weight: 600;
+    display: table;
+}
+
+.page_aside .main-section ul .booking-cost .booking_details_total_cost{
+	border-top: 1px dashed #ccc;
+    color: #5c42ab !important;	
+}
+/******** pagina detalhes da limpeza ********/

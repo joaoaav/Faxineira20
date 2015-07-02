@@ -20,6 +20,111 @@ var MemoryStore = function(successCallback, errorCallback) {
         }
         callLater(callback, employee);
     }
+    
+    this.buscaPorId = function(id, callback) {
+    	
+    	var pessoas = JSON.parse(window.sessionStorage.getItem("pessoas"));
+        var pessoa = null;
+        var l = pessoas.length;
+        for (var i=0; i < l; i++) {
+            if (pessoas[i].id === id) {
+            	pessoa = pessoas[i];
+                break;
+            }
+        }
+        callLater(callback, pessoa);
+    }
+    
+    this.getLimpezaDetalhe = function() {  
+    	//window.sessionStorage.clear();
+    	//var limpeza = new Object;
+    	var limpeza = JSON.parse(window.sessionStorage.getItem("limpeza"));
+    	if (limpeza == null){
+    		limpeza = new Object;
+    		limpeza.endereco = null;
+    		limpeza.faxineiras = null;
+    		
+    		limpeza.custo = new Object();
+    		limpeza.custo.limpeza = app.custoLimpeza * 2;
+    		limpeza.custo.material = 0;
+    		limpeza.custo.total = app.custoLimpeza * 2;
+    	}
+    	
+    	console.log(limpeza);
+    	
+    	return limpeza;
+    }
+        
+    this.setLimpezaDetalhe = function(key, valor) {    	
+    	var limpeza = this.getLimpezaDetalhe();
+    	limpeza[key] = valor;
+    	
+    	window.sessionStorage.setItem("limpeza", JSON.stringify(limpeza));
+    	
+    	//console.log(limpeza);
+    }
+    
+    this.buscaEmpregadas = function(memory) {
+    	
+    	var pessoas = null;
+    	if (memory){
+    		pessoas = JSON.parse(window.sessionStorage.getItem("pessoas"));
+    	}else{
+    		pessoas = new Array();
+    		for (i = 0; i < 5; i++) { 
+    			var pessoa = new Object();
+    			pessoa.nome = 'lalala '+i;
+    			pessoa.imagem = 'profile-photo.jpg';
+    			pessoa.estrelas = 1;
+    			pessoa.habilidades = new Array('Geladeira', 'Janela');
+    			
+    			var recomendacao1 = new Object();
+    			recomendacao1.id = 1;
+    			recomendacao1.nome = 'Primeira';
+    			recomendacao1.descricao = 'Lalalala';
+    			recomendacao1.estrelas = 5;
+    			
+    			var recomendacao2 = new Object();
+    			recomendacao2.id = 2;
+    			recomendacao2.nome = 'Segunda';
+    			recomendacao2.descricao = 'Leleele';
+    			recomendacao2.estrelas = 4;
+    			
+    			pessoa.recomendacoes = new Array(recomendacao1, recomendacao2);
+    			pessoa.quantidadeRecomendacoes = pessoa.recomendacoes.length;
+    			pessoa.id = i;			
+    			
+    			pessoas.push(pessoa);
+    		}
+    		
+    		window.sessionStorage.setItem("pessoas", JSON.stringify(pessoas));
+    	}
+    	
+    	return pessoas; 
+    }
+    
+    this.setUsuario = function(usuario) {
+    	window.localStorage.setItem('usuario', JSON.stringify(usuario));
+    	return true;
+    }
+    
+    this.getUsuario = function() {
+    	var usuario = JSON.parse(window.localStorage.getItem('usuario'));
+    	if (usuario == null){
+    		usuario = new Object();
+    		usuario.logado = '0';
+    		window.localStorage.setItem('usuario', JSON.stringify(usuario));
+    	}
+    	console.log(usuario);
+    	return usuario;
+    }
+    
+    this.logout = function() {
+    	window.localStorage.removeItem('usuario');
+    	usuario = new Object();
+		usuario.logado = '0';
+		window.localStorage.setItem('usuario', JSON.stringify(usuario));
+    }
 
     // Used to simulate async calls. This is done to provide a consistent interface with stores (like WebSqlStore)
     // that use async data access APIs

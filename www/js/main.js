@@ -7,9 +7,19 @@ var app = {
         	alert(title ? (title + ": " + message) : message);
     	}
 	},
+	
+	logout: function(event) {
+		app.store.logout();
+		location.reload();
+		return true;
+	},
     
     registerEvents: function() {
 		$(window).on('hashchange', $.proxy(this.route, this));
+		
+		$('body').on('click', 'a[voltar="true"]', function(event) {
+			window.sessionStorage.setItem("voltar", "1");
+        });
 		
 		$('body').on('mousedown', 'a', function(event) {
             $(event.target).addClass('tappable-active');
@@ -50,28 +60,43 @@ var app = {
 	        self.slidePage(new InicioView().render());
 	    }
 	    
+	    //carrega página de login
+	    var login = hash.match(app.loginURL);
+	    if (login) {
+	    	//alert(1);
+	        self.slidePage(new LoginView().render());
+	    }
+	    
 	    //carrega página de faxineiras inicial
 	    var pessoas = hash.match(app.pessoasURL);
 	    if (pessoas) {
-	    	self.slidePage(new PessoasView().render());
+	    	self.slidePage(new PessoasView(true).render());
 	    }
 	    
-	    var match = hash.match(app.detailsURL);
-	    if (match) {
-	    	alert(2);
-	        this.store.findById(Number(match[1]), function(employee) {
-	            self.slidePage(new EmployeeView(employee).render());
+	    //carrega página de detalhes da faxineira
+	    var pessoaDetalhe = hash.match(app.pessoaDetalheURL);
+	    if (pessoaDetalhe) {
+	    	this.store.buscaPorId(Number(pessoaDetalhe[1]), function(pessoa) {
+	            self.slidePage(new PessoaDetalheView(pessoa).render());
 	        });
+	    }
+	    
+	    //carrega página de detalhes da limpeza
+	    var limpezaDetalhe = hash.match(app.limpezaDetalheURL);
+	    if (limpezaDetalhe) {
+	    	self.slidePage(new LimpezaDetalheView().render());
 	    }
 	},
 	
 	initialize: function() {
 		var self = this;
 		
-		this.detailsURL = /^#employees\/(\d{1,})/;
 		this.homeURL = /^#homePage/;
 		this.inicioURL = /^#inicio/;
+		this.loginURL = /^#login/;
 		this.pessoasURL = /^#pessoas/;
+		this.pessoaDetalheURL = /^#pessoaDetalhe\/(\d{1,})/;
+		this.limpezaDetalheURL = /^#limpezaDetalhe/;
 		
 		this.registerEvents();
 		//this.store = new MemoryStore(function() {
@@ -96,12 +121,20 @@ var app = {
 	 
 	    // Cleaning up: remove old pages that were moved out of the viewport
 	    $('.stage-right, .stage-left').not('.homePage').remove();
-	 
+	    
+	    var voltar = window.sessionStorage.getItem("voltar");
+	    //alert(voltar);
+	    
 	    if (page === app.homePage) {
 	        // Always apply a Back transition (slide from left) when we go back to the search page
 	        $(page.el).attr('class', 'page stage-left');
 	        currentPageDest = "stage-right";
-	    } else {
+	    } else if (voltar == "1") {
+	    	// Always apply a Back transition (slide from left) when using back button
+	    	$(page.el).attr('class', 'page stage-left');
+	        currentPageDest = "stage-right";
+	        window.sessionStorage.setItem("voltar","0");
+	    }else{
 	        // Forward transition (slide from right)
 	        $(page.el).attr('class', 'page stage-right');
 	        currentPageDest = "stage-left";
@@ -123,5 +156,32 @@ var app = {
 };
 
 app.cabecalhoTemplate = Handlebars.compile($("#cabecalho-tpl").html());
+app.custoLimpeza = 12;
+app.custoMaterial = 5;
 
 app.initialize();
+
+Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+	switch (operator) {
+        case '==':
+            return (v1 == v2) ? options.fn(this) : options.inverse(this);
+        case '===':
+            return (v1 === v2) ? options.fn(this) : options.inverse(this);
+        case '<':
+            return (v1 < v2) ? options.fn(this) : options.inverse(this);
+        case '<=':
+            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+        case '>':
+            return (v1 > v2) ? options.fn(this) : options.inverse(this);
+        case '>=':
+            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+        case '&&':
+            return (v1 && v2) ? options.fn(this) : options.inverse(this);
+        case '||':
+            return (v1 || v2) ? options.fn(this) : options.inverse(this);
+        case '!=':
+            return (v1 != v2) ? options.fn(this) : options.inverse(this);
+        default:
+            return options.inverse(this);
+    }
+});

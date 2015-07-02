@@ -9,16 +9,21 @@ var InicioView  = function() {
         
         this.el.on('click', '.buscar-cep', this.buscaCep);
         this.el.on('click', '.buscar-localizacao', this.buscaLocalizacao);
-        
 
         this.el.on('click', '.buscar-empregada-cep', this.buscaEmpregada);
         this.el.on('click', '.buscar-empregada-posicao', this.buscaEmpregada);
+        this.el.on('click', '.buscar-empregada-usuario', this.buscaUsuario);
+
+        this.el.on('click', '.btn-logout', app.logout);
         
     };
     
     this.render = function() {
     	this.el.html(app.cabecalhoTemplate());
-	    this.el.append(InicioView.conteudoTemplate());
+    	
+    	var usuario = app.store.getUsuario();
+    	//console.log(usuario);
+	    this.el.append(InicioView.conteudoTemplate(usuario));
 	    
 	    this.el.find('.buscar-empregada-cep').hide();
 	    this.el.find('.buscar-empregada-posicao').hide();
@@ -29,7 +34,7 @@ var InicioView  = function() {
 	    event.preventDefault();
 	    console.log('buscaCep');
 	    
-	    var cep = $('#cep-busca').val();
+	    var cep = $('#cep-busca').val().trim();
 	    
 	    if (postcode_validate(cep)){
 	    	
@@ -42,6 +47,8 @@ var InicioView  = function() {
 	    		}
 	    		
 	    		var endereco = new Object();
+	    		
+	    		//console.log(response.results);
 	    		
 	    	    $.each( response.results, function( i, item ) {
 	    	    	
@@ -65,12 +72,14 @@ var InicioView  = function() {
 	    	    		}
 	    	    	});
 	    	    	
+	    	    	endereco.rua = '';
 	    	    	endereco.completo = item.formatted_address;
 	    	    	endereco.latitude = item.geometry.location.lat;
 	    	    	endereco.longitude = item.geometry.location.lng;
 	    	    });
 	    	    
-	    	    window.sessionStorage.setItem("enderecoBusca", JSON.stringify(endereco));
+	    	    //window.sessionStorage.setItem("enderecoBusca", JSON.stringify(endereco));
+	    	    app.store.setLimpezaDetalhe('endereco',endereco);
 	    	    
 	    	    //console.log(endereco);
 	    	    //console.log(window.sessionStorage.getItem("enderecoBusca"));
@@ -98,9 +107,37 @@ var InicioView  = function() {
 	    return false;
 	};
 	
+	this.buscaUsuario = function(event) {
+	    event.preventDefault();
+	    console.log('buscaUsuario');
+	    
+	    var usuario = app.store.getUsuario(); 
+	    
+	    var endereco = new Object();
+	    endereco.cep = usuario.endereco.cep;
+	    endereco.rua = usuario.endereco.rua;
+		endereco.bairro = usuario.endereco.bairro;
+		endereco.cidade = usuario.endereco.cidade;
+		endereco.estado = usuario.endereco.estado;
+		endereco.pais = usuario.endereco.pais;
+		endereco.completo = '';
+		endereco.latitude = '';
+		endereco.longitude = '';
+
+		app.store.setLimpezaDetalhe('endereco',endereco);
+	    
+		//InicioView.prototype = new InicioView();
+		//InicioView.prototype.buscaEmpregada(event);
+		this.buscaEmpregada(event);
+		
+	}.bind(this);;
+	
 	this.buscaEmpregada = function(event) {
 		event.preventDefault();
 	    console.log('buscaEmpregada');
+	    
+	    var pessoas = app.store.buscaEmpregadas(false);
+	    //alert(pessoas.length);
 	    
 	    window.location="index.html#pessoas";
 	    return true;
@@ -285,13 +322,15 @@ var InicioView  = function() {
 	          var endereco = new Object();
 	          var res = results[1].formatted_address.split(',');
 	          endereco.endereco = res[0].trim();
+	          endereco.rua = res[0].trim();
 	          endereco.bairro = res[1].trim();
 	          endereco.cidade = res[2].trim();
 	          endereco.estado = res[2].trim();
 	          endereco.pais = res[3].trim();
 	          endereco.cep = '';
 	          
-	          window.sessionStorage.setItem("enderecoBusca", JSON.stringify(endereco));
+	          //window.sessionStorage.setItem("enderecoBusca", JSON.stringify(endereco));
+	          app.store.setLimpezaDetalhe('endereco',endereco);
 	          
 	          $('#hidEnderecoPosicao').val(endereco.endereco);
 	          $('#hidBairroPosicao').val(endereco.bairro);
