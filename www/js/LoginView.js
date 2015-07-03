@@ -1,14 +1,14 @@
 var LoginView  = function() {
 	
 	this.initialize = function() {
-        this.el = $('<div/>');
+        this.el = $('body');
         
         this.el.on('click', '.btn-login', this.login);
     };
     
     this.render = function() {
     	this.el.html(app.cabecalhoTemplate());
-	    this.el.append(LoginView.conteudoTemplate());
+	    this.el.find('.scroll').html(LoginView.conteudoTemplate());
 	    
 	    return this;
 	};

@@ -1,7 +1,7 @@
 var PessoasView  = function(memory) {
 	
     this.initialize = function() {
-        this.el = $('<div/>');
+        this.el = $('body');
         
         this.el.on('click', '.btn-proximo-pessoas', this.proximo);
         this.el.on('click', '.btn-logout', app.logout);
@@ -15,7 +15,7 @@ var PessoasView  = function(memory) {
     	
     	//window.sessionStorage.setItem("pessoas", JSON.stringify(pessoas));
     	
-    	this.el.append(PessoasView.conteudoTemplate({pessoas:pessoas, usuario:usuario}));
+    	this.el.find('.scroll').append(PessoasView.conteudoTemplate({pessoas:pessoas, usuario:usuario}));
 	    return this;
 	};
 	

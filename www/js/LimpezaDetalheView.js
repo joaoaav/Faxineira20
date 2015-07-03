@@ -5,7 +5,7 @@ var LimpezaDetalheView  = function() {
 
 	  
 	this.initialize = function() {
-        this.el = $('<div/>');
+        this.el = $('body');
         
         this.el.on('change', '#quantidade-horas', this.mudaQuantidadeHoras);
         this.el.on('change', '.materialLimpeza', this.mudaMaterialLimpeza);
@@ -42,8 +42,8 @@ var LimpezaDetalheView  = function() {
     	reserva.detalhes.extra = new Array();
     	app.store.setLimpezaDetalhe('detalhes',reserva.detalhes);
     	
-	    this.el.append(LimpezaDetalheView.conteudoTemplate({usuario:usuario}));
-	    this.el.find('.limpeza-detalhe').after(LimpezaDetalheView.resumoTemplate(reserva));
+	    this.el.find('.scroll').append(LimpezaDetalheView.conteudoTemplate({usuario:usuario}));
+	    this.el.find('.limpeza-detalhe').append(LimpezaDetalheView.resumoTemplate(reserva));
 	    
 	    return this;
 	};

@@ -30,316 +30,380 @@
 		<link href="css/styles.css" rel="stylesheet">		
         <title>Faxineira 2.0</title>
         
-        
-        
-        
+        <!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="bootstrap-3.3.5/css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="bootstrap-3.3.5/css/bootstrap-theme.min.css">
     </head>
-    <body>
+    <body role="document">
     
     	<script id="cabecalho-tpl" type="text/x-handlebars-template">
-    		<div class='header'><span class="logo"></span><h1>P&aacute;gina Inicial</h1></div>
-		</script>
-    
-    	<script id="home-tpl" type="text/x-handlebars-template">
-    		<div class='search-bar'>
-				<a href="#inicio" class="button">Clique aqui para pesquisar</a>
+    		<nav class="navbar navbar-inverse navbar-fixed-top">
+	      		<div class="container">
+	        		<div class="navbar-header">
+	          			<span class="logo"></span>
+	          			<button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+	            			<span class="sr-only">Toggle navigation</span>
+	            			<span class="icon-bar"></span>
+	            			<span class="icon-bar"></span>
+	            			<span class="icon-bar"></span>
+	          			</button>
+	          			<a href="#homePage" class="navbar-brand">P&aacute;gina Inicial</a>
+	        		</div>
+	        		<div class="collapse navbar-collapse" id="navbar">
+	          			<ul class="nav navbar-nav">
+	            			<li class="active"><a href="#homePage">Home</a></li>
+	            			<li><a href="#about">About</a></li>
+	            			<li><a href="#contact">Contact</a></li>
+	          			</ul>
+	        		</div><!--/.nav-collapse -->
+	      		</div>
+	    	</nav>
+			<div class="container theme-showcase scroll" role="main">
 			</div>
-			<div class="scroll">
-				<div class="app">
-					<h1>Faxineira 2.0</h1>
-            		<div id="deviceready" class="blink">
-                		<p class="event listening">Dispositivo pronto</p>
-            		</div>
-				</div>
+		</script>
+		
+    	<script id="home-tpl" type="text/x-handlebars-template">
+			<div class="action">
+				<a href="#inicio" class="btn btn-lg btn-warning">Clique aqui para pesquisar</a>
+			</div>
+			
+			<div class="row">
+        		<div class="col-sm-12">
+          			<div class="panel panel-default">
+            			<div class="panel-heading">
+             				<h3 class="panel-title">Faxineira 2.0</h3>
+            			</div>
+            			<div class="panel-body">
+            				Bem vindo
+							<spam class="app-logo"></spam>
+            			</div>
+          			</div>
+        		</div><!-- /.col-sm-12 -->
+      		</div>
+		</script>
+		
+		<script id="inicio-tpl" type="text/x-handlebars-template">
+    		<div class="action">
+				<a href="#homePage" class="btn btn-lg btn-info" voltar="true">Voltar</a>
+				{{#ifCond this.logado '==' '1'}}
+					<a href="#inicio" class="btn btn-lg btn-danger btn-logout">Logout</a>
+				{{/ifCond}}
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+          			<div class="panel panel-default">
+            			<div class="panel-heading">
+             				<h3 class="panel-title">Pesquisar por CEP</h3>
+            			</div>
+            			<div class="panel-body">
+            				Digite seu CEP<br>
+							<input type="text" name="cep-busca" id="cep-busca"/><br>
+							<a href="#" class="btn btn-lg btn-warning buscar-cep">Procurar</a>
+							<div id="mapaCep" style="width: 100%;height: 400px; display:none; "></div>
+							<div id="localizacaoCep"></div>
+						
+							<input type="hidden" name="hidEnderecoCep" id="hidEnderecoCep"/>
+							<input type="hidden" name="hidBairroCep" id="hidBairroCep"/>
+							<input type="hidden" name="hidCidadeCep" id="hidCidadeCep"/>
+							<input type="hidden" name="hidEstadoCep" id="hidEstadoCep"/>
+							<input type="hidden" name="hidCepCep" id="hidCepCep"/>
+							<a href="#" class="btn btn-lg btn-warning buscar-empregada-cep">Ache minha Faxineira</a>
+            			</div>
+          			</div>
+        		</div><!-- /.col-sm-12 -->
+				<div class="col-sm-12">
+          			<div class="panel panel-default">
+            			<div class="panel-heading">
+             				<h3 class="panel-title">Pesquisar por minha localiza&ccedil;&atilde;o atual</h3>
+            			</div>
+            			<div class="panel-body">
+							<a href="#" class="btn btn-lg btn-warning buscar-localizacao">Procurar</a><br>
+							<div id="mapa" style="margin-top:15px; width: 100%;height: 400px; display:none; "></div><br>
+							<div id="localizacao"></div>
+						
+							<input type="hidden" name="hidEnderecoPosicao" id="hidEnderecoPosicao"/>
+							<input type="hidden" name="hidBairroPosicao" id="hidBairroPosicao"/>
+							<input type="hidden" name="hidCidadePosicao" id="hidCidadePosicao"/>
+							<input type="hidden" name="hidEstadoPosicao" id="hidEstadoPosicao"/>
+							<input type="hidden" name="hidCepPosicao" id="hidCepPosicao"/>
+							<a href="#" class="btn btn-lg btn-warning buscar-empregada-posicao">Ache minha Faxineira</a>
+            			</div>
+          			</div>
+        		</div><!-- /.col-sm-12 -->
+				<div class="col-sm-12">
+          			<div class="panel panel-default">
+            			<div class="panel-heading">
+             				<h3 class="panel-title">Pesquisar por meus dados cadastrados</h3>
+            			</div>
+            			<div class="panel-body">
+							{{#ifCond this.logado '==' '0'}}
+								Fa&ccedil;a seu login<br>
+								<a href="#login" class="btn btn-lg btn-danger">Login</a>
+							{{else}}
+								<a href="" class="btn btn-lg btn-warning buscar-empregada-usuario">Procurar</a>
+								<a href="#inicio" class="btn btn-lg btn-danger btn-logout">Logout</a>
+							{{/ifCond}}
+            			</div>
+          			</div>
+        		</div><!-- /.col-sm-12 -->
 			</div>
 		</script>
 		
 		<script id="login-tpl" type="text/x-handlebars-template">
-    		<div class='search-bar'>
-				<a href="" class="button">Voltar</a>
+			<div class="action">
+				<a href="#homePage" class="btn btn-lg btn-info" voltar="true">Voltar</a>
+				<button type="submit" class="btn btn-lg btn-warning btn-login" redirect="">Login</button>
 			</div>
-			<div class="scroll">
-				<div class="row">
-					<div class="title">Usu&aacute;rio</div>
-					<div class="description">
-						<input type="text" name="login-usuario" class="" id="login-usuario"/>
-					</div>
-				</div>
-				<div class="row">
-					<div class="title">Senha</div>
-					<div class="description">
-						<input type="password" name="login-senha" class="" id="login-senha"/>
-					</div>
-				</div>
-				<div class="acao">
-					<a href="" class="button btn-login" redirect="">Login</a>
-				</div>
-			</div>
-		</script>
-		
-		<script id="inicio-tpl" type="text/x-handlebars-template">
-    		<div class='search-bar'>
-				<a href="#homePage" class="button" voltar="true">Voltar</a>
-				{{#ifCond this.logado '==' '1'}}
-					<a href="#inicio" class="button btn-logout">Logout</a>
-				{{/ifCond}}
-			</div>
-			<div class="scroll">
-				<div class="inicio-busca">
-					Digite seu CEP<br>
-					<input type="text" name="cep-busca" id="cep-busca"/><br>
-					<a href="#" class="button buscar-cep">Procurar</a>
-					<div id="mapaCep" style="width: 100%;height: 400px; display:none; "></div><br>
-					<div id="localizacaoCep"></div>
-					
-					<input type="hidden" name="hidEnderecoCep" id="hidEnderecoCep"/>
-					<input type="hidden" name="hidBairroCep" id="hidBairroCep"/>
-					<input type="hidden" name="hidCidadeCep" id="hidCidadeCep"/>
-					<input type="hidden" name="hidEstadoCep" id="hidEstadoCep"/>
-					<input type="hidden" name="hidCepCep" id="hidCepCep"/>
-					<a href="#" class="button buscar-empregada-cep">Ache minha Faxineira</a>
-				</div>
-				<div class="inicio-separador"> OU </div>
-				<div class="inicio-busca">
-					Clique aqui para procurar sua localiza&ccedil;&atilde;o<br>
-					<a href="#" class="button buscar-localizacao">Procurar</a><br>
-					<div id="mapa" style="width: 100%;height: 400px; display:none; "></div><br>
-					<div id="localizacao"></div>
-					
-					<input type="hidden" name="hidEnderecoPosicao" id="hidEnderecoPosicao"/>
-					<input type="hidden" name="hidBairroPosicao" id="hidBairroPosicao"/>
-					<input type="hidden" name="hidCidadePosicao" id="hidCidadePosicao"/>
-					<input type="hidden" name="hidEstadoPosicao" id="hidEstadoPosicao"/>
-					<input type="hidden" name="hidCepPosicao" id="hidCepPosicao"/>
-					<a href="#" class="button buscar-empregada-posicao">Ache minha Faxineira</a>
-				</div>
-				<div class="inicio-separador"> OU </div>
-				<div class="inicio-busca">
-					{{#ifCond this.logado '==' '0'}}
-						Fa&ccedil;a seu login<br>
-						<a href="#login" class="button">Login</a>
-					{{else}}
-						<a href="" class="button buscar-empregada-usuario">Ache minha Faxineira pelo meus dados</a>
-						<a href="#inicio" class="button btn-logout">Logout</a>
-					{{/ifCond}}
-				</div>
+			<div class="row">
+				<div class="col-sm-12">
+          			<div class="panel panel-default">
+            			<div class="panel-heading">
+             				<h3 class="panel-title">Fa&ccedil;a seu Login:</h3>
+            			</div>
+            			<div class="panel-body">
+	        				<label class="sr-only" for="inputEmail">Email</label>
+	        				<input type="email" autofocus="" required="" placeholder="Email" class="form-control" name="login-usuario" id="login-usuario"/>
+	        				<label class="sr-only" for="inputPassword">Password</label>
+	        				<input type="password" required="" placeholder="Senha" class="form-control" name="login-senha" id="login-senha"/>
+	        				<!--<div class="checkbox">
+		          				<label>
+	            					<input type="checkbox" id value="remember-me"> Lembre me
+	          					</label>
+	        				</div>-->
+            			</div>
+          			</div>
+        		</div><!-- /.col-sm-12 -->
 			</div>
 		</script>
 		
 		<script id="pessoas-tpl" type="text/x-handlebars-template">
-    		<div class='search-bar'>
-				<a href="#inicio" class="button" voltar="true">Voltar</a>
-				{{#ifCond usuario.logado '==' '1'}}
-					<a href="#inicio" class="button btn-logout">Logout</a>
+    		<div class="action">
+				<a href="#inicio" class="btn btn-lg btn-info" voltar="true">Voltar</a>
+				{{#ifCond this.logado '==' '1'}}
+					<a href="#inicio" class="btn btn-lg btn-danger btn-logout">Logout</a>
 				{{/ifCond}}
+				<a href="" class="btn btn-lg btn-warning btn-proximo-pessoas">Pr&oacute;ximo</a>
 			</div>
-			<div class="scroll">
-				<ul class="listaPessoas">
-					{{#pessoas}}
-					<li class="pessoas" id="avatar_{{this.id}}">
-         		 		<div class="imagem">
-            				<a href="#pessoaDetalhe/{{this.id}}" >
-              					<img src="./img/{{this.imagem}}">
+			<div class="row">
+				{{#pessoas}}
+				<div class="col-sm-2">
+          			<div class="panel panel-default">
+            			<div class="panel-body pessoas">
+							<div class="imagem">
+            					<a href="#pessoaDetalhe/{{this.id}}" >
+              						<img src="./img/{{this.imagem}}">
+								</a>
+							</div>
+							<div class="avaliacao">
+								<img src="./img/star{{this.estrelas}}.png">
+							</div>
+							<a href="#pessoaDetalhe/{{this.id}}" class="nome">
+								{{this.nome}}
 							</a>
-						</div>
-						<div class="avaliacao">
-							<img src="./img/star{{this.estrelas}}.png">
-						</div>
-						<a href="#pessoaDetalhe/{{this.id}}" class="nome">
-							{{this.nome}}
-						</a>
-					</li>
-    			{{/pessoas}}
-				</ul>
-				<div class="acao">
-					<a href="" class="button btn-proximo-pessoas">Pr&oacute;ximo</a>
-				</div>
+            			</div>
+          			</div>
+        		</div><!-- /.col-sm-3 -->
+				{{/pessoas}}
 			</div>
 		</script>
 		
 		<script id="pessoaDetalhe-tpl" type="text/x-handlebars-template">
-    		<div class='search-bar'>
-				<a href="#pessoas" class="button" voltar="true">Voltar</a>
-				{{#ifCond usuario.logado '==' '1'}}
-					<a href="#inicio" class="button btn-logout">Logout</a>
+    		<div class="action">
+				<a href="#pessoas" class="btn btn-lg btn-info" voltar="true">Voltar</a>
+				{{#ifCond this.logado '==' '1'}}
+					<a href="#inicio" class="btn btn-lg btn-danger btn-logout">Logout</a>
 				{{/ifCond}}
 			</div>
-			<div class="scroll">
-				
+			<div class="row">
+				<div class="col-sm-3">
+          			<div class="panel panel-default">
+            			<div class="panel-heading">
+             				<h3 class="panel-title">Detalhes</h3>
+            			</div>
+            			<div class="panel-body center">
+            				<img width="120px" src="./img/{{pessoa.imagem}}" class="pessoa-modal-sidebar__avatar" alt="{{pessoa.nome}}">
 
-				<aside class="pessoa-modal-sidebar">
-    				<img width="120px" src="./img/{{pessoa.imagem}}" class="pessoa-modal-sidebar__avatar" alt="{{pessoa.nome}}">
+							<h1 class="pessoa-modal-sidebar__name">
+								{{pessoa.nome}}
+							</h1>
 
-					<h1 class="pessoa-modal-sidebar__name">
-						{{pessoa.nome}}
-					</h1>
+							<div class="pessoa-modal-sidebar__stars">
+								<img src="./img/star{{pessoa.estrelas}}.png">
+							</div>
 
-					<div class="pessoa-modal-sidebar__stars">
-						<img src="./img/star{{pessoa.estrelas}}.png">
-					</div>
-
-    				<div class="pessoa-modal-sidebar__rating-number">
-      					{{pessoa.quantidadeRecomendacoes}} an&aacute;lises
-    				</div>
+    						<div class="pessoa-modal-sidebar__rating-number">
+      							{{pessoa.quantidadeRecomendacoes}} an&aacute;lises
+    						</div>
     				
-					<ul class="pessoa-modal-breakdown">
-						{{#pessoa.habilidades}}
-      					<li class="pessoa-modal-breakdown__item pessoa-modal-breakdown__item--true">
-          					{{.}}
-      					</li>
-						{{/pessoa.habilidades}}
-    				</ul>
+							<ul class="pessoa-modal-breakdown">
+								{{#pessoa.habilidades}}
+      							<li class="pessoa-modal-breakdown__item pessoa-modal-breakdown__item--true">
+	          						{{.}}
+      							</li>
+								{{/pessoa.habilidades}}
+    						</ul>
       				
-					<div class="pessoa-modal-actions" id="remove_shortlist_92475">
-        				<a rel="nofollow" href="" class="button btn-remover-pessoa" pessoaId="{{pessoa.id}}">Remover da lista</a>
-					</div>
-      				<!--<div class="hide" id="add_shortlist_92475">
-         				<a rel="nofollow" href="/ie/candidates/2215350?candidate%5Bselected%5D=true" data-remote="true" data-method="put" class="pessoa-shortlist__cta pessoa-shortlist__cta--add">Add To Shortlist</a>
-      				</div>-->
-  				</aside>
-
-				<div class="pessoa-modal-reviews">
-    				<h1 class="pessoa-modal-reviews__heading">
-		      			{{pessoa.nome}} an&aacute;lises
-    				</h1>
-	
-      				<ul class="pessoa-modal-reviews-list">
-						{{#each pessoa.recomendacoes}}
-						<li id="review{{this.id}}" class="pessoa-modal-reviews-list__item ">
-              				<div class="pessoa-modal-reviews-list__header">
-	                			<h1 class="pessoa-modal-review__heading">
-                  					{{this.nome}}
-                				</h1>
-                				<aside id="review_stars_27032" class="pessoa-modal-review__stars">
-									<div class="avaliacao">
-										<img src="./img/star{{this.estrelas}}.png">
-									</div>
-								</aside>
-              				</div>
-              				<p class="pessoa-modal-review__comments">
-	                			{{this.descricao}}
-              				</p>
-            			</li>
-						{{/each}}
-      				</ul>
-  				</div>
-    		</div>
+							<div class="pessoa-modal-actions" id="remove_shortlist_92475">
+        						<a rel="nofollow" href="" class="btn btn-lg btn-danger btn-remover-pessoa" pessoaId="{{pessoa.id}}">Remover da lista</a>
+							</div>
+      						<!--<div class="hide" id="add_shortlist_92475">
+         						<a rel="nofollow" href="/ie/candidates/2215350?candidate%5Bselected%5D=true" data-remote="true" data-method="put" class="pessoa-shortlist__cta pessoa-shortlist__cta--add">Add To Shortlist</a>
+      						</div>-->
+            			</div>
+          			</div>
+        		</div><!-- /.col-sm-3 -->
+				<div class="col-sm-9">
+          			<div class="panel panel-default">
+            			<div class="panel-heading">
+             				<h3 class="panel-title">An&aacute;lises</h3>
+            			</div>
+            			<div class="panel-body">
+            				<ul class="pessoa-modal-reviews-list">
+								{{#each pessoa.recomendacoes}}
+								<li id="review{{this.id}}" class="pessoa-modal-reviews-list__item ">
+              						<div class="pessoa-modal-reviews-list__header">
+	                					<h1 class="pessoa-modal-review__heading">
+                  							{{this.nome}}
+                						</h1>
+                						<aside id="review_stars_27032" class="pessoa-modal-review__stars">
+											<div class="avaliacao">
+												<img src="./img/star{{this.estrelas}}.png">
+											</div>
+										</aside>
+              						</div>
+              						<p class="pessoa-modal-review__comments">
+	                					{{this.descricao}}
+              						</p>
+            					</li>
+								{{/each}}
+      						</ul>
+            			</div>
+          			</div>
+        		</div><!-- /.col-sm-9 -->
+			</div>
 		</script>
 		
 		<script id="limpeza-detalhe-tpl" type="text/x-handlebars-template">
-    		<div class='search-bar'>
-				<a href="#pessoas" class="button" voltar="true">Voltar</a>
-				{{#ifCond usuario.logado '==' '1'}}
-					<a href="#inicio" class="button btn-logout">Logout</a>
+    		<div class="action">
+				<a href="#pessoas" class="btn btn-lg btn-info" voltar="true">Voltar</a>
+				{{#ifCond this.logado '==' '1'}}
+					<a href="#inicio" class="btn btn-lg btn-danger btn-logout">Logout</a>
 				{{/ifCond}}
+				<a href="#limpezaConfirmacao" class="btn btn-lg btn-warning btn-proximo-limpeza-detalhes">Pr&oacute;ximo</a>
 			</div>
-			<div class="scroll">
-				<div class="limpeza-detalhe">
-					<div class="row">
-						<div class="title">Frequ&ecirc;ncia:</div>
-						<div class="description">
-							<input type="radio" name="frequencia" class="frequencia" id="frequencia0" value="0" checked/> Uma vez
-							<input type="radio" name="frequencia" class="frequencia" id="frequencia1" value="1"/> Semanal
-							<input type="radio" name="frequencia" class="frequencia" id="frequencia2" value="2"/> Quinzenal
-							<input type="radio" name="frequencia" class="frequencia" id="frequencia3" value="3"/> Outro
+			<div class="row limpeza-detalhe">
+				<div class="col-sm-9">
+          			<div class="panel panel-default">
+            			<div class="panel-heading">
+             				<h3 class="panel-title">Detalhes</h3>
+            			</div>
+            			<div class="panel-body center">
+							<form class="form-horizontal" role="form">
+  								<div class="form-group">
+    								<label class="control-label col-sm-4" for="frequencia">Frequ&ecirc;ncia:</label>
+    								<div class="col-sm-8">
+      									<input type="radio" name="frequencia" class="frequencia" id="frequencia0" value="0" checked/> Uma vez
+										<input type="radio" name="frequencia" class="frequencia" id="frequencia1" value="1"/> Semanal
+										<input type="radio" name="frequencia" class="frequencia" id="frequencia2" value="2"/> Quinzenal
+										<input type="radio" name="frequencia" class="frequencia" id="frequencia3" value="3"/> Outro
+    								</div>
+  								</div>
+  								<div class="form-group">
+    								<label class="control-label col-sm-4" for="horas">Quantidade de horas:</label>
+    								<div class="col-sm-8">
+      									<select name="quantidade-horas" id="quantidade-horas">
+											<option value="2" checked>2 Horas</option>
+											<option value="2.5">2.5 Horas</option>
+											<option value="3">3 Horas</option>
+											<option value="3.5">3.5 Horas</option>
+											<option value="4">4 Horas</option>
+											<option value="4.5">4.5 Horas</option>
+											<option value="5">5 Horas</option>
+											<option value="5.5">5.5 Horas</option>
+											<option value="6">6 Horas</option>
+											<option value="6.5">6.5 Horas</option>
+											<option value="7">7 Horas</option>
+											<option value="7.5">7.5 Horas</option>
+											<option value="8">8 Horas</option>
+										</select>
+    								</div>
+  								</div>
+  								<div class="form-group">
+    								<label class="control-label col-sm-4" for="inicio">Data de in&iacute;cio:</label>
+    								<div class="col-sm-8">
+      									<input type="date" name="data-inicio" id="data-inicio" class="data-inicio" />
+										<input type="time" name="hora-inicio" id="hora-inicio" class="hora-inicio" />
+    								</div>
+  								</div>
+  								<div class="form-group">
+    								<label class="control-label col-sm-4" for="materialLimpeza">Precisa que traga material de limpeza?</label>
+    								<div class="col-sm-8">
+      									<input type="radio" name="extra" class="materialLimpeza" value="0"/> Sim
+										<input type="radio" name="extra" class="materialLimpeza" value="1" checked/> Não
+    								</div>
+  								</div>
+  								<div class="form-group">
+    								<label class="control-label col-sm-4" for="materialLimpeza">Precisa de algo extra?</label>
+    								<div class="col-sm-8">
+      									<label><input type="checkbox" name="extra" id="extra0" value="0"/> Passar roupa</label>
+										<label><input type="checkbox" name="extra" id="extra1" value="1"/> Tenho animais</label>
+										<label><input type="checkbox" name="extra" id="extra2" value="2"/> Limpar geladeira</label>
+    								</div>
+  								</div>
+							</form>
 						</div>
 					</div>
-					<div class="row">
-						<div class="title">Quantidade de horas:</div>
-						<div class="description">
-							<select name="quantidade-horas" id="quantidade-horas">
-								<option value="2" checked>2 Horas</option>
-								<option value="2.5">2.5 Horas</option>
-								<option value="3">3 Horas</option>
-								<option value="3.5">3.5 Horas</option>
-								<option value="4">4 Horas</option>
-								<option value="4.5">4.5 Horas</option>
-								<option value="5">5 Horas</option>
-								<option value="5.5">5.5 Horas</option>
-								<option value="6">6 Horas</option>
-								<option value="6.5">6.5 Horas</option>
-								<option value="7">7 Horas</option>
-								<option value="7.5">7.5 Horas</option>
-								<option value="8">8 Horas</option>
-							</select>
-						</div>
-					</div>
-					<div class="row">
-						<div class="title">Data de in&iacute;cio: </div>
-						<div class="description">
-							<input type="date" name="data-inicio" id="data-inicio" class="data-inicio" />
-							<input type="time" name="hora-inicio" id="hora-inicio" class="hora-inicio" />
-						</div>
-					</div>
-					<div class="row">
-						<div class="title">Precisa que traga material de limpeza?</div>
-						<div class="description">
-							<input type="radio" name="extra" class="materialLimpeza" value="0"/> Sim
-							<input type="radio" name="extra" class="materialLimpeza" value="1" checked/> Não
-						</div>
-					</div>
-					<div class="row">
-						<div class="title">Precisa de algo extra?</div>
-						<div class="description vertical">
-							<label><input type="checkbox" name="extra" id="extra0" value="0"/> Passar roupa</label>
-							<label><input type="checkbox" name="extra" id="extra1" value="1"/> Tenho animais</label>
-							<label><input type="checkbox" name="extra" id="extra2" value="2"/> Limpar geladeira</label>
-						</div>
-					</div>
-				</div>
-				<div class="acao">
-					<a href="#limpezaConfirmacao" class="button">Pr&oacute;ximo</a>
 				</div>
 			</div>
 		</script>
 		
 		<script id="resummo-tpl" type="text/x-handlebars-template">
-    		<aside class="page_aside">
-  				<div class="flat-box booking_summary">
-    				<div class="header aqua">
-      					Resumo da Reserva
-    				</div>
-    				<div class="main-section box">
-    					<ul class="booking_details unstyled_list">
-							<li class="booking_details_item">
-        						<span class="booking_detail_name">
-          							CEP
-        						</span>
-        						<span class="booking_detail_value">
-          							{{this.endereco.cep}}
-        						</span>
-      						</li>
-							<li class="booking_details_item">
-        						<span class="booking_detail_name">
-          							Rua
-        						</span>
-        						<span class="booking_detail_value">
-          							{{this.endereco.rua}}
-        						</span>
-      						</li>
-							<li class="booking_details_item">
-        						<span class="booking_detail_name">
-          							Bairro
-        						</span>
-        						<span class="booking_detail_value">
-          							{{this.endereco.bairro}}
-        						</span>
-      						</li>
-							<li class="booking_details_item">
-        						<span class="booking_detail_name">
-          							Cidade
-        						</span>
-        						<span class="booking_detail_value">
-          							{{this.endereco.cidade}}
-        						</span>
-      						</li>
-
-							<li class="booking_details_item">
-        						<span class="booking_detail_name">
-          							Frequência
-        						</span>
-        						<span class="booking_detail_value resumo-frequencia">
-									{{#ifCond this.detalhes.frequencia '==' 0}}
+				<div class="col-sm-3">
+          			<div class="panel panel-default">
+            			<div class="panel-heading">
+             				<h3 class="panel-title">Resumo da Reserva</h3>
+            			</div>
+            			<div class="panel-body center booking_summary">
+							<div class="row">
+								<div class="col-sm-6">
+    	      						CEP
+        						</div>
+        						<div class="col-sm-6">
+	          						{{this.endereco.cep}}
+        						</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+    	      						Rua
+        						</div>
+        						<div class="col-sm-6">
+	          						{{this.endereco.rua}}
+        						</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+    	      						Bairro
+        						</div>
+        						<div class="col-sm-6">
+	          						{{this.endereco.bairro}}
+        						</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+    	      						Cidade
+        						</div>
+        						<div class="col-sm-6">
+	          						{{this.endereco.cidade}}
+        						</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+    	      						Frequência
+        						</div>
+        						<div class="col-sm-6 resumo-frequencia">
+	          						{{#ifCond this.detalhes.frequencia '==' 0}}
 										Uma vez
 									{{else}}
 										{{#ifCond this.detalhes.frequencia '==' 1}}
@@ -348,46 +412,46 @@
 											{{#ifCond this.detalhes.frequencia '==' 2}}
   												Quinzenal
 											{{else}}
-  												Outro
+	  											Outro
 											{{/ifCond}}
 										{{/ifCond}}
 									{{/ifCond}}
-        						</span>
-      						</li>
-							<li class="booking_details_item">
-        						<span class="booking_detail_name">
-          							Quantidade de Horas
-        						</span>
-        						<span class="booking_detail_value resumo-quantidade-horas">
-          							{{this.detalhes.quantidadeHoras}} horas
-        						</span>
-      						</li>
-							<li class="booking_details_item">
-        						<span class="booking_detail_name">
-          							Data Início
-        						</span>
-        						<span class="booking_detail_value resumo-data">
-          							{{this.detalhes.data}}
-        						</span>
-      						</li>
-							<li class="booking_details_item">
-        						<span class="booking_detail_name">
-          							Material de Limpeza
-        						</span>
-        						<span class="booking_detail_value resumo-material-limpeza">
-									{{#if this.detalhes.materialLimpeza}}
-          							Sim
+        						</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+    	      						Quantidade de Horas
+        						</div>
+        						<div class="col-sm-6 resumo-frequencia">
+	          						{{this.detalhes.quantidadeHoras}} horas
+        						</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+    	      						Data Início
+        						</div>
+        						<div class="col-sm-6 resumo-data">
+	          						{{this.detalhes.data}}
+        						</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+    	      						Material de Limpeza
+        						</div>
+        						<div class="col-sm-6 resumo-material-limpeza">
+	          						{{#if this.detalhes.materialLimpeza}}
+          								Sim
 									{{else}}
-          							Não
+          								Não
 									{{/if}}
-        						</span>
-      						</li>
-							<li class="booking_details_item">
-        						<span class="booking_detail_name">
-          							Extra
-        						</span>
-        						<span class="booking_detail_value resumo-extra">
-          							{{#each this.detalhes.extra}}
+        						</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+    	      						Extra
+        						</div>
+        						<div class="col-sm-6 resumo-extra">
+	          						{{#each this.detalhes.extra}}
 										{{#ifCond this '==' 0}}
 											<span class="resumo-extra-passar">Passar Roupa, </spam>
 										{{else}}
@@ -395,46 +459,44 @@
 												<span class="resumo-extra-animais">Tenho Animais, </spam>
 											{{else}}
 												{{#ifCond this '==' 2}}
-	  												<span class="resumo-extra-geladeira">Limpar Geladeira, </spam>
+  													<span class="resumo-extra-geladeira">Limpar Geladeira, </spam>
 												{{else}}
   													
 												{{/ifCond}}
 											{{/ifCond}}
 										{{/ifCond}}
 									{{/each}}
-        						</span>
-      						</li>
-
+								</div>
+							</div>
 							<div class="booking-cost">
-   								<li class="booking_details_item">
-									<span class="booking_detail_name">
-       									Custo da Limpeza
-   									</span>
-   									<span class="booking_detail_value bid_cost_summary" id="custo-limpeza">
-	       								R$ {{this.custo.limpeza}}
-          							</span>
-        						</li>
-            					<li style="display: none;" class="booking_details_item booking_details_materials_item">
-              						<span class="booking_detail_name">
-                						Custo do Material
-              						</span>
-              						<span class="booking_detail_value bid_materials_summary" id="custo-material">
-										R$ {{this.custo.material}}
-									</span>
-            					</li>
-          						<li class="booking_details_item booking_details_total_cost">
-            						<span class="booking_detail_name">
-              							Custo Total
-            						</span>
-            						<span class="booking_detail_value bid_cost_total" id="custo-total">
-										R$ {{this.custo.total}}
-									</span>
-          						</li>
-      						</div>
-						</ul>
-    				</div>
+								<div class="row">
+									<div class="col-sm-7 booking_details_item">
+    	      							Custo da Limpeza
+        							</div>
+        							<div class="col-sm-5" id="custo-limpeza">
+		          						R$ {{this.custo.limpeza}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-7 booking_details_item">
+    	      							Custo do Material
+        							</div>
+        							<div class="col-sm-5" id="custo-material">
+		          						R$ {{this.custo.material}}
+									</div>
+								</div>
+								<div class="row booking_details_total_cost">
+									<div class="col-sm-7">
+    	      							Custo Total
+        							</div>
+        							<div class="col-sm-5" id="custo-total">
+		          						R$ {{this.custo.total}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-      		</aside>	
 		</script>
 		
         <script type="text/javascript" src="cordova.js"></script>
@@ -443,7 +505,8 @@
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHVrcsPm5RQraoZ2hGT3MbhZDpD8jKgeU">
 	    </script>
 
-		<script src="lib/jquery-1.8.2.min.js"></script>
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="bootstrap-3.3.5/js/bootstrap.min.js"></script>
 		<script src="lib/handlebars.js"></script>
 		<script src="js/storage/memory-store.js"></script>
 		<script src="js/storage/websql-store.js"></script>

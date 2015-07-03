@@ -1,7 +1,7 @@
 var PessoaDetalheView  = function(pessoa) {
 	
     this.initialize = function() {
-        this.el = $('<div/>');
+        this.el = $('body');
         this.el.on('click', '.btn-remover-pessoa', this.removerEmpregada);
         this.el.on('click', '.btn-logout', app.logout);
     };
@@ -10,7 +10,7 @@ var PessoaDetalheView  = function(pessoa) {
     	this.el.html(app.cabecalhoTemplate());
     	
     	var usuario = app.store.getUsuario();
-    	this.el.append(PessoaDetalheView.template({pessoa:pessoa, usuario:usuario}));
+    	this.el.find('.scroll').append(PessoaDetalheView.template({pessoa:pessoa, usuario:usuario}));
 		return this;
 	};
 		

@@ -5,7 +5,7 @@ var InicioView  = function() {
 
 	  
 	this.initialize = function() {
-        this.el = $('<div/>');
+        this.el = $('body');
         
         this.el.on('click', '.buscar-cep', this.buscaCep);
         this.el.on('click', '.buscar-localizacao', this.buscaLocalizacao);
@@ -23,7 +23,9 @@ var InicioView  = function() {
     	
     	var usuario = app.store.getUsuario();
     	//console.log(usuario);
-	    this.el.append(InicioView.conteudoTemplate(usuario));
+    	//$('.scroll').html();
+    	this.el.find('.scroll').html(InicioView.conteudoTemplate(usuario));
+	    //this.el.append(InicioView.conteudoTemplate(usuario));
 	    
 	    this.el.find('.buscar-empregada-cep').hide();
 	    this.el.find('.buscar-empregada-posicao').hide();

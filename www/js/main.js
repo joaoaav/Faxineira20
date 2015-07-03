@@ -19,15 +19,17 @@ var app = {
 		
 		$('body').on('click', 'a[voltar="true"]', function(event) {
 			window.sessionStorage.setItem("voltar", "1");
+			parent.history.back();
+	    	return false;
         });
 		
-		$('body').on('mousedown', 'a', function(event) {
-            $(event.target).addClass('tappable-active');
-        });
+		//$('body').on('mousedown', 'a', function(event) {
+            //$(event.target).addClass('tappable-active');
+        //});
         
-		$('body').on('mouseup', 'a', function(event) {
-            $(event.target).removeClass('tappable-active');
-        });
+		//$('body').on('mouseup', 'a', function(event) {
+            //$(event.target).removeClass('tappable-active');
+        //});
 	},
 		
 	route: function() {

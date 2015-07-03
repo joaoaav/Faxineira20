@@ -2,13 +2,13 @@ var HomeView = function(store) {
 	
     this.initialize = function() {
         // Define a div wrapper for the view. The div wrapper is used to attach events.
-        this.el = $('<div/>');
+        this.el = $('body');
         //this.el.on('click', '.inicio-btn', this.inicioPesquisa);
     };
     
     this.render = function() {
 	    this.el.html(app.cabecalhoTemplate());
-	    this.el.append(HomeView.template());
+	    this.el.find('.scroll').append(HomeView.template());
 	    return this;
 	};
 	

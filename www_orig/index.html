@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        
+		<link href="css/styles.css" rel="stylesheet">		
+        <title>Faxineira 2.0</title>
+        
+        
+        
+        
+    </head>
+    <body>
+    
+    	<script id="cabecalho-tpl" type="text/x-handlebars-template">
+    		<div class='header'><span class="logo"></span><h1>P&aacute;gina Inicial</h1></div>
+		</script>
+    
+    	<script id="home-tpl" type="text/x-handlebars-template">
+    		<div class='search-bar'>
+				<a href="#inicio" class="button">Clique aqui para pesquisar</a>
+			</div>
+			<div class="scroll">
+				<div class="app">
+					<h1>Faxineira 2.0</h1>
+            		<div id="deviceready" class="blink">
+                		<p class="event listening">Dispositivo pronto</p>
+            		</div>
+				</div>
+			</div>
+		</script>
+		
+		<script id="login-tpl" type="text/x-handlebars-template">
+    		<div class='search-bar'>
+				<a href="" class="button">Voltar</a>
+			</div>
+			<div class="scroll">
+				<div class="row">
+					<div class="title">Usu&aacute;rio</div>
+					<div class="description">
+						<input type="text" name="login-usuario" class="" id="login-usuario"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="title">Senha</div>
+					<div class="description">
+						<input type="password" name="login-senha" class="" id="login-senha"/>
+					</div>
+				</div>
+				<div class="acao">
+					<a href="" class="button btn-login" redirect="">Login</a>
+				</div>
+			</div>
+		</script>
+		
+		<script id="inicio-tpl" type="text/x-handlebars-template">
+    		<div class='search-bar'>
+				<a href="#homePage" class="button" voltar="true">Voltar</a>
+				{{#ifCond this.logado '==' '1'}}
+					<a href="#inicio" class="button btn-logout">Logout</a>
+				{{/ifCond}}
+			</div>
+			<div class="scroll">
+				<div class="inicio-busca">
+					Digite seu CEP<br>
+					<input type="text" name="cep-busca" id="cep-busca"/><br>
+					<a href="#" class="button buscar-cep">Procurar</a>
+					<div id="mapaCep" style="width: 100%;height: 400px; display:none; "></div><br>
+					<div id="localizacaoCep"></div>
+					
+					<input type="hidden" name="hidEnderecoCep" id="hidEnderecoCep"/>
+					<input type="hidden" name="hidBairroCep" id="hidBairroCep"/>
+					<input type="hidden" name="hidCidadeCep" id="hidCidadeCep"/>
+					<input type="hidden" name="hidEstadoCep" id="hidEstadoCep"/>
+					<input type="hidden" name="hidCepCep" id="hidCepCep"/>
+					<a href="#" class="button buscar-empregada-cep">Ache minha Faxineira</a>
+				</div>
+				<div class="inicio-separador"> OU </div>
+				<div class="inicio-busca">
+					Clique aqui para procurar sua localiza&ccedil;&atilde;o<br>
+					<a href="#" class="button buscar-localizacao">Procurar</a><br>
+					<div id="mapa" style="width: 100%;height: 400px; display:none; "></div><br>
+					<div id="localizacao"></div>
+					
+					<input type="hidden" name="hidEnderecoPosicao" id="hidEnderecoPosicao"/>
+					<input type="hidden" name="hidBairroPosicao" id="hidBairroPosicao"/>
+					<input type="hidden" name="hidCidadePosicao" id="hidCidadePosicao"/>
+					<input type="hidden" name="hidEstadoPosicao" id="hidEstadoPosicao"/>
+					<input type="hidden" name="hidCepPosicao" id="hidCepPosicao"/>
+					<a href="#" class="button buscar-empregada-posicao">Ache minha Faxineira</a>
+				</div>
+				<div class="inicio-separador"> OU </div>
+				<div class="inicio-busca">
+					{{#ifCond this.logado '==' '0'}}
+						Fa&ccedil;a seu login<br>
+						<a href="#login" class="button">Login</a>
+					{{else}}
+						<a href="" class="button buscar-empregada-usuario">Ache minha Faxineira pelo meus dados</a>
+						<a href="#inicio" class="button btn-logout">Logout</a>
+					{{/ifCond}}
+				</div>
+			</div>
+		</script>
+		
+		<script id="pessoas-tpl" type="text/x-handlebars-template">
+    		<div class='search-bar'>
+				<a href="#inicio" class="button" voltar="true">Voltar</a>
+				{{#ifCond usuario.logado '==' '1'}}
+					<a href="#inicio" class="button btn-logout">Logout</a>
+				{{/ifCond}}
+			</div>
+			<div class="scroll">
+				<ul class="listaPessoas">
+					{{#pessoas}}
+					<li class="pessoas" id="avatar_{{this.id}}">
+         		 		<div class="imagem">
+            				<a href="#pessoaDetalhe/{{this.id}}" >
+              					<img src="./img/{{this.imagem}}">
+							</a>
+						</div>
+						<div class="avaliacao">
+							<img src="./img/star{{this.estrelas}}.png">
+						</div>
+						<a href="#pessoaDetalhe/{{this.id}}" class="nome">
+							{{this.nome}}
+						</a>
+					</li>
+    			{{/pessoas}}
+				</ul>
+				<div class="acao">
+					<a href="" class="button btn-proximo-pessoas">Pr&oacute;ximo</a>
+				</div>
+			</div>
+		</script>
+		
+		<script id="pessoaDetalhe-tpl" type="text/x-handlebars-template">
+    		<div class='search-bar'>
+				<a href="#pessoas" class="button" voltar="true">Voltar</a>
+				{{#ifCond usuario.logado '==' '1'}}
+					<a href="#inicio" class="button btn-logout">Logout</a>
+				{{/ifCond}}
+			</div>
+			<div class="scroll">
+				
+
+				<aside class="pessoa-modal-sidebar">
+    				<img width="120px" src="./img/{{pessoa.imagem}}" class="pessoa-modal-sidebar__avatar" alt="{{pessoa.nome}}">
+
+					<h1 class="pessoa-modal-sidebar__name">
+						{{pessoa.nome}}
+					</h1>
+
+					<div class="pessoa-modal-sidebar__stars">
+						<img src="./img/star{{pessoa.estrelas}}.png">
+					</div>
+
+    				<div class="pessoa-modal-sidebar__rating-number">
+      					{{pessoa.quantidadeRecomendacoes}} an&aacute;lises
+    				</div>
+    				
+					<ul class="pessoa-modal-breakdown">
+						{{#pessoa.habilidades}}
+      					<li class="pessoa-modal-breakdown__item pessoa-modal-breakdown__item--true">
+          					{{.}}
+      					</li>
+						{{/pessoa.habilidades}}
+    				</ul>
+      				
+					<div class="pessoa-modal-actions" id="remove_shortlist_92475">
+        				<a rel="nofollow" href="" class="button btn-remover-pessoa" pessoaId="{{pessoa.id}}">Remover da lista</a>
+					</div>
+      				<!--<div class="hide" id="add_shortlist_92475">
+         				<a rel="nofollow" href="/ie/candidates/2215350?candidate%5Bselected%5D=true" data-remote="true" data-method="put" class="pessoa-shortlist__cta pessoa-shortlist__cta--add">Add To Shortlist</a>
+      				</div>-->
+  				</aside>
+
+				<div class="pessoa-modal-reviews">
+    				<h1 class="pessoa-modal-reviews__heading">
+		      			{{pessoa.nome}} an&aacute;lises
+    				</h1>
+	
+      				<ul class="pessoa-modal-reviews-list">
+						{{#each pessoa.recomendacoes}}
+						<li id="review{{this.id}}" class="pessoa-modal-reviews-list__item ">
+              				<div class="pessoa-modal-reviews-list__header">
+	                			<h1 class="pessoa-modal-review__heading">
+                  					{{this.nome}}
+                				</h1>
+                				<aside id="review_stars_27032" class="pessoa-modal-review__stars">
+									<div class="avaliacao">
+										<img src="./img/star{{this.estrelas}}.png">
+									</div>
+								</aside>
+              				</div>
+              				<p class="pessoa-modal-review__comments">
+	                			{{this.descricao}}
+              				</p>
+            			</li>
+						{{/each}}
+      				</ul>
+  				</div>
+    		</div>
+		</script>
+		
+		<script id="limpeza-detalhe-tpl" type="text/x-handlebars-template">
+    		<div class='search-bar'>
+				<a href="#pessoas" class="button" voltar="true">Voltar</a>
+				{{#ifCond usuario.logado '==' '1'}}
+					<a href="#inicio" class="button btn-logout">Logout</a>
+				{{/ifCond}}
+			</div>
+			<div class="scroll">
+				<div class="limpeza-detalhe">
+					<div class="row">
+						<div class="title">Frequ&ecirc;ncia:</div>
+						<div class="description">
+							<input type="radio" name="frequencia" class="frequencia" id="frequencia0" value="0" checked/> Uma vez
+							<input type="radio" name="frequencia" class="frequencia" id="frequencia1" value="1"/> Semanal
+							<input type="radio" name="frequencia" class="frequencia" id="frequencia2" value="2"/> Quinzenal
+							<input type="radio" name="frequencia" class="frequencia" id="frequencia3" value="3"/> Outro
+						</div>
+					</div>
+					<div class="row">
+						<div class="title">Quantidade de horas:</div>
+						<div class="description">
+							<select name="quantidade-horas" id="quantidade-horas">
+								<option value="2" checked>2 Horas</option>
+								<option value="2.5">2.5 Horas</option>
+								<option value="3">3 Horas</option>
+								<option value="3.5">3.5 Horas</option>
+								<option value="4">4 Horas</option>
+								<option value="4.5">4.5 Horas</option>
+								<option value="5">5 Horas</option>
+								<option value="5.5">5.5 Horas</option>
+								<option value="6">6 Horas</option>
+								<option value="6.5">6.5 Horas</option>
+								<option value="7">7 Horas</option>
+								<option value="7.5">7.5 Horas</option>
+								<option value="8">8 Horas</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="title">Data de in&iacute;cio: </div>
+						<div class="description">
+							<input type="date" name="data-inicio" id="data-inicio" class="data-inicio" />
+							<input type="time" name="hora-inicio" id="hora-inicio" class="hora-inicio" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="title">Precisa que traga material de limpeza?</div>
+						<div class="description">
+							<input type="radio" name="extra" class="materialLimpeza" value="0"/> Sim
+							<input type="radio" name="extra" class="materialLimpeza" value="1" checked/> Não
+						</div>
+					</div>
+					<div class="row">
+						<div class="title">Precisa de algo extra?</div>
+						<div class="description vertical">
+							<label><input type="checkbox" name="extra" id="extra0" value="0"/> Passar roupa</label>
+							<label><input type="checkbox" name="extra" id="extra1" value="1"/> Tenho animais</label>
+							<label><input type="checkbox" name="extra" id="extra2" value="2"/> Limpar geladeira</label>
+						</div>
+					</div>
+				</div>
+				<div class="acao">
+					<a href="#limpezaConfirmacao" class="button">Pr&oacute;ximo</a>
+				</div>
+			</div>
+		</script>
+		
+		<script id="resummo-tpl" type="text/x-handlebars-template">
+    		<aside class="page_aside">
+  				<div class="flat-box booking_summary">
+    				<div class="header aqua">
+      					Resumo da Reserva
+    				</div>
+    				<div class="main-section box">
+    					<ul class="booking_details unstyled_list">
+							<li class="booking_details_item">
+        						<span class="booking_detail_name">
+          							CEP
+        						</span>
+        						<span class="booking_detail_value">
+          							{{this.endereco.cep}}
+        						</span>
+      						</li>
+							<li class="booking_details_item">
+        						<span class="booking_detail_name">
+          							Rua
+        						</span>
+        						<span class="booking_detail_value">
+          							{{this.endereco.rua}}
+        						</span>
+      						</li>
+							<li class="booking_details_item">
+        						<span class="booking_detail_name">
+          							Bairro
+        						</span>
+        						<span class="booking_detail_value">
+          							{{this.endereco.bairro}}
+        						</span>
+      						</li>
+							<li class="booking_details_item">
+        						<span class="booking_detail_name">
+          							Cidade
+        						</span>
+        						<span class="booking_detail_value">
+          							{{this.endereco.cidade}}
+        						</span>
+      						</li>
+
+							<li class="booking_details_item">
+        						<span class="booking_detail_name">
+          							Frequência
+        						</span>
+        						<span class="booking_detail_value resumo-frequencia">
+									{{#ifCond this.detalhes.frequencia '==' 0}}
+										Uma vez
+									{{else}}
+										{{#ifCond this.detalhes.frequencia '==' 1}}
+											Semanal
+										{{else}}
+											{{#ifCond this.detalhes.frequencia '==' 2}}
+  												Quinzenal
+											{{else}}
+  												Outro
+											{{/ifCond}}
+										{{/ifCond}}
+									{{/ifCond}}
+        						</span>
+      						</li>
+							<li class="booking_details_item">
+        						<span class="booking_detail_name">
+          							Quantidade de Horas
+        						</span>
+        						<span class="booking_detail_value resumo-quantidade-horas">
+          							{{this.detalhes.quantidadeHoras}} horas
+        						</span>
+      						</li>
+							<li class="booking_details_item">
+        						<span class="booking_detail_name">
+          							Data Início
+        						</span>
+        						<span class="booking_detail_value resumo-data">
+          							{{this.detalhes.data}}
+        						</span>
+      						</li>
+							<li class="booking_details_item">
+        						<span class="booking_detail_name">
+          							Material de Limpeza
+        						</span>
+        						<span class="booking_detail_value resumo-material-limpeza">
+									{{#if this.detalhes.materialLimpeza}}
+          							Sim
+									{{else}}
+          							Não
+									{{/if}}
+        						</span>
+      						</li>
+							<li class="booking_details_item">
+        						<span class="booking_detail_name">
+          							Extra
+        						</span>
+        						<span class="booking_detail_value resumo-extra">
+          							{{#each this.detalhes.extra}}
+										{{#ifCond this '==' 0}}
+											<span class="resumo-extra-passar">Passar Roupa, </spam>
+										{{else}}
+											{{#ifCond this '==' 1}}
+												<span class="resumo-extra-animais">Tenho Animais, </spam>
+											{{else}}
+												{{#ifCond this '==' 2}}
+	  												<span class="resumo-extra-geladeira">Limpar Geladeira, </spam>
+												{{else}}
+  													
+												{{/ifCond}}
+											{{/ifCond}}
+										{{/ifCond}}
+									{{/each}}
+        						</span>
+      						</li>
+
+							<div class="booking-cost">
+   								<li class="booking_details_item">
+									<span class="booking_detail_name">
+       									Custo da Limpeza
+   									</span>
+   									<span class="booking_detail_value bid_cost_summary" id="custo-limpeza">
+	       								R$ {{this.custo.limpeza}}
+          							</span>
+        						</li>
+            					<li style="display: none;" class="booking_details_item booking_details_materials_item">
+              						<span class="booking_detail_name">
+                						Custo do Material
+              						</span>
+              						<span class="booking_detail_value bid_materials_summary" id="custo-material">
+										R$ {{this.custo.material}}
+									</span>
+            					</li>
+          						<li class="booking_details_item booking_details_total_cost">
+            						<span class="booking_detail_name">
+              							Custo Total
+            						</span>
+            						<span class="booking_detail_value bid_cost_total" id="custo-total">
+										R$ {{this.custo.total}}
+									</span>
+          						</li>
+      						</div>
+						</ul>
+    				</div>
+				</div>
+      		</aside>	
+		</script>
+		
+        <script type="text/javascript" src="cordova.js"></script>
+		<script src="phonegap.js"></script>
+		
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHVrcsPm5RQraoZ2hGT3MbhZDpD8jKgeU">
+	    </script>
+
+		<script src="lib/jquery-1.8.2.min.js"></script>
+		<script src="lib/handlebars.js"></script>
+		<script src="js/storage/memory-store.js"></script>
+		<script src="js/storage/websql-store.js"></script>
+		<script src="js/HomeView.js"></script>
+		<script src="js/InicioView.js"></script>
+		<script src="js/LoginView.js"></script>
+		<script src="js/PessoasView.js"></script>
+		<script src="js/PessoaDetalheView.js"></script>
+		<script src="js/LimpezaDetalheView.js"></script>
+		<!-- <script src="js/EmployeeView.js"></script> -->
+		<script src="js/main.js"></script>
+		
+        <!-- <script type="text/javascript" src="js/index.js"></script> 
+        <script type="text/javascript">
+            app.initialize();
+        </script>-->
+    </body>
+</html>
